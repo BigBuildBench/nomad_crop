@@ -1,0 +1,66 @@
+[package]
+name = "crop"
+version = "0.4.2"
+edition = "2021"
+rust-version = "1.65"
+authors = ["Riccardo Mazzarini <me@noib3.dev>"]
+description = "A pretty fast text rope"
+documentation = "https://docs.rs/crop"
+repository = "https://github.com/nomad/crop"
+readme = "README.md"
+license = "MIT"
+keywords = ["rope", "tree", "edit", "buffer"]
+categories = ["data-structures", "text-editors", "text-processing"]
+exclude = ["/.github/*", "/examples/**", "/fuzz/**", "/tests/**", "/BENCHMARKS.md"]
+
+[package.metadata.docs.rs]
+features = ["graphemes", "simd", "utf16-metric"]
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = ["simd", "std"]
+graphemes = ["unicode-segmentation"]
+simd = ["str_indices/simd"]
+utf16-metric = []
+std = []
+
+# Private features
+small_chunks = []
+arity_4 = []
+deep_trees = ["small_chunks", "arity_4"]
+dp = ["deep_trees"]
+
+[dependencies]
+
+[dev-dependencies]
+criterion = "0.5"
+rand = "0.8"
+ropey = "1.6"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+
+[[bench]]
+name = "creation"
+harness = false
+
+[[bench]]
+name = "editing"
+harness = false
+
+[[bench]]
+name = "graphemes"
+harness = false
+required-features = ["graphemes"]
+
+[[bench]]
+name = "iterators"
+harness = false
+
+[[bench]]
+name = "metric_conversion"
+harness = false
+
+[[bench]]
+name = "slicing"
+harness = false

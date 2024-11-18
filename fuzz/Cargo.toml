@@ -1,0 +1,23 @@
+[package]
+name = "crop-fuzz"
+version = "0.0.0"
+authors = ["Automatically generated"]
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[features]
+small_chunks = ["crop/small_chunks"]
+
+[dependencies]
+
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "editing"
+path = "fuzz_targets/editing.rs"
+test = false
+doc = false
